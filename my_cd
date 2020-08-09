@@ -20,6 +20,11 @@ c() {
 		fi	
 		count="1"
 	done
-	cd $match
+	if [ "$match" = "" ]
+	then
+		cd $1
+	else
+		cd $match
+	fi
 	return 0
 }
