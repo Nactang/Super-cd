@@ -4,7 +4,7 @@ c() {
 		cd $1
 		return 0
 	fi
-	match=`ls -a | grep "$1"`
+	match=`ls -a -d */ | grep "$1"`
 	count=""
 	for f in ${match[@]}
 	do	
