@@ -5,7 +5,13 @@ c() {
 		return 0
 	fi
 	setopt sh_word_split
-	match=`(ls -a -d */ | grep "$1")`
+
+	if [ "${1:0:1}" = "." ]
+	then
+		match=`(ls -a -d .*/ | grep "\\.${1:1}")`
+	else
+		match=`(ls -a -d */ | grep "$1")`
+	fi
 	old_IFS=$IFS
 	IFS=$'\n' 
 	
