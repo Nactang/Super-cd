@@ -9,13 +9,13 @@ c() {
 	IFS=$'\n' 
 	if [ "${1:0:1}" = "." ]
 	then
-		match=`(ls -a -d .*/ | grep "\\.${1:1}") 2> /dev/null`
+		match=`(ls -d .*/ | grep "\\.${1:1}") 2> /dev/null`
 	else
-		match=`(ls -a -d */ | grep "$1") 2> /dev/null`
+		match=`(ls -d */ | grep "$1") 2> /dev/null`
 		a=`(ls -a -d .*/ | grep "$1") 2> /dev/null`
 		if [ "$a" != "" ]
 		then
-			match=`echo "$a\n$match"`
+			match=`echo "$match\n$a"`
 		fi
 	fi
 
