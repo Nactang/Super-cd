@@ -10,7 +10,9 @@ c() {
 	then
 		match=`(ls -a -d .*/ | grep "\\.${1:1}")`
 	else
-		match=`(ls -a -d */ | grep "$1")`
+		a=`(ls -a -d */ | grep "$1")`
+		match=`(ls -a -d .*/ | grep "$1")`
+		match="$a\n$match"
 	fi
 	old_IFS=$IFS
 	IFS=$'\n' 
