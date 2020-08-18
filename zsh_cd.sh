@@ -5,17 +5,20 @@ c() {
 		return 0
 	fi
 	setopt sh_word_split
-
-	if [ "${1:0:1}" = "." ]
-	then
-		match=`(ls -a -d .*/ | grep "\\.${1:1}")`
-	else
-		a=`(ls -a -d */ | grep "$1")`
-		match=`(ls -a -d .*/ | grep "$1")`
-		match="$a\n$match"
-	fi
 	old_IFS=$IFS
 	IFS=$'\n' 
+	if [ "${1:0:1}" = "." ]
+	then
+		match=`(ls -a -d .*/ | grep "\\.${1:1}") 2> /dev/null`
+	else
+		match=`(ls -a -d */ | grep "$1") 2> /dev/null`
+		a=`(ls -a -d .*/ | grep "$1") 2> /dev/null`
+		if [ "$a" != "" ]
+		then
+			match=`echo "$a\n$match"`
+		fi
+	fi
+
 	
 	count=""
 	for f in ${match[@]}; do	
@@ -37,7 +40,7 @@ c() {
 	else
 		cd "$match"
 	fi
-	IFS=old_IFS
+	IFS=$old_IFS
 	unsetopt sh_word_split
 	return 0
 }
